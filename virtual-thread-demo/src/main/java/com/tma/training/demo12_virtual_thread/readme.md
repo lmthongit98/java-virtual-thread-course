@@ -49,16 +49,7 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 - Creates an **executor service** where **each task gets its own virtual thread**.
 - **Auto-closes** after execution using try-with-resources.
 
-### **4. Using `Executors.newThreadExecutor(Thread.ofVirtual())` (Explicit Custom Executor)**
-```java
-ExecutorService executor = Executors.newThreadExecutor(Thread.ofVirtual());
-executor.submit(() -> System.out.println("Virtual thread running in custom executor"));
-executor.shutdown();
-```
-- Alternative to `newVirtualThreadPerTaskExecutor()`.
-- Allows **customization** of executor behavior.
-
-### **5. Using `StructuredTaskScope` (Scoped Execution)**
+### **4. Using `StructuredTaskScope` (Scoped Execution)**
 ```java
 import java.util.concurrent.*;
 
@@ -90,6 +81,11 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
 ## **When to Use Virtual Threads?**
 ✔ **Best suited for I/O-bound tasks** (e.g., database calls, network requests, file operations).  
 ❌ **Not ideal for CPU-bound tasks** (e.g., heavy computations) since they still share CPU time on platform threads.
+
+## **ExecutorService with Virtual Threads**
+- **`SingleThreadExecutor`**/**`FixedThreadExecutor`**  &#8594; use **Semaphore** + **Queue**
+- **`CachedThreadPool()`** &#8594; more or less same as **`Executors.newVirtualThreadPerTaskExecutor()`**
+- **`ScheduledExecutor`** &#8594; use **Platform Thread** to schedule and **Virtual Thread** to execute.
 
 ## Best Practices
 - **Use `Executors.newVirtualThreadPerTaskExecutor()`** for handling multiple tasks.
