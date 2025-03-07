@@ -1,6 +1,5 @@
-# Java Thread States
+## DEMO 05 - THREAD STATES
 
-## Overview
 In Java, a thread can exist in one of several states throughout its lifecycle. The `Thread.State` enum defines the possible states a thread can be in. This document provides an overview of these states and how threads transition between them.
 
 ## Thread States

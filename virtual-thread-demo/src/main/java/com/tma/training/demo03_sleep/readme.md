@@ -1,4 +1,4 @@
-### DEMO 04 - SLEEP
+### DEMO 03 - SLEEP
 
 Making a thread sleep for a while.
 

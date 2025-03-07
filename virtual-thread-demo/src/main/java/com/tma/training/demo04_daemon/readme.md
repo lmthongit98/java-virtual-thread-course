@@ -1,4 +1,4 @@
-### DEMO 05 - THREAD DETACHING
+### DEMO 04 - SLEEP
 
 When a thread is marked as a daemon, it means that it will not keep the JVM alive on its own.
 The JVM will terminate automatically once all non-daemon (user) threads complete, regardless of whether daemon threads are still running.
