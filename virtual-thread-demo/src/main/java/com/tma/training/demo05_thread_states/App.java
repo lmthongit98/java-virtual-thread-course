@@ -1,6 +1,8 @@
 package com.tma.training.demo05_thread_states;
 
 import com.tma.training.util.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -14,6 +16,9 @@ import java.time.Duration;
  * */
 
 class App {
+
+    private static final Logger log = LoggerFactory.getLogger(App.class);
+
     private static final Object LOCK = new Object();
 
     public static void main(String[] args) {
@@ -21,11 +26,11 @@ class App {
         Thread t1 = new Thread(() -> {
             synchronized (LOCK) {
                 try {
-                    System.out.println("Messi acquired the monitor lock");
+                    log.info("Messi acquired the monitor lock");
                     CommonUtils.sleep(Duration.ofSeconds(5)); // TIME_WAITING
-                    System.out.println("Messi wait (released lock)...");
+                    log.info("Messi wait (released lock)...");
                     LOCK.wait(); // WAITING
-                    System.out.println("Messi Finished");
+                    log.info("Messi Finished");
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -35,10 +40,10 @@ class App {
 
         Thread t2 = new Thread(() -> {
             synchronized (LOCK) { // BLOCKED
-                System.out.println("Ronaldo acquired the monitor lock");
+                log.info("Ronaldo acquired the monitor lock");
                 CommonUtils.sleep(Duration.ofSeconds(10));
                 LOCK.notify();
-                System.out.println("Ronaldo finished and released the monitor lock");
+                log.info("Ronaldo finished and released the monitor lock");
             }
         }, "Ronaldo");
 
