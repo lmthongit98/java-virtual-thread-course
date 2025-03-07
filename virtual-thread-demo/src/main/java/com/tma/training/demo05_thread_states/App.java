@@ -13,7 +13,7 @@ import java.time.Duration;
  *
  * */
 
-class ThreadStateDemo {
+class App {
     private static final Object LOCK = new Object();
 
     public static void main(String[] args) {
