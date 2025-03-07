@@ -17,7 +17,7 @@ In concurrent programming, tasks can be categorized into **CPU-bound** and **IO-
 ## Choosing the Ideal Thread Pool Size
 The optimal thread pool size depends on the nature of the workload.
 
-### **1. CPU-Bound Tasks: FixedThreadPool**
+### **1. CPU-Bound Tasks**
 - **Formula:** `Number of CPU Cores + 1`
 - **Why?** More threads than cores lead to excessive context switching, reducing performance.
 - **Example:**
@@ -26,12 +26,13 @@ The optimal thread pool size depends on the nature of the workload.
   ExecutorService cpuBoundPool = Executors.newFixedThreadPool(cores + 1);
   ```
 
-### **2. IO-Bound Tasks: CachedThreadPool**
+### **2. IO-Bound Tasks**
 - **Formula:** `Number of CPU Cores * 2` (or higher depending on I/O latency)
 - **Why?** Since most of the time is spent waiting for I/O, we can have more threads to utilize CPU efficiently.
 - **Example:**
   ```java
-  ExecutorService ioBoundPool = Executors.newCachedThreadPool();
+  int cores = Runtime.getRuntime().availableProcessors();
+  ExecutorService ioBoundPool = Executors.newFixedThreadPool(cores * 2);
   ```
 - A better approach is to use a **custom ThreadPoolExecutor**:
   ```java
@@ -41,10 +42,10 @@ The optimal thread pool size depends on the nature of the workload.
   ```
 
 ## Summary Table
-| Task Type  | Ideal Thread Pool | Formula |
-|------------|------------------|---------|
-| CPU-Bound  | FixedThreadPool  | `CPU cores + 1` |
-| IO-Bound   | CachedThreadPool | `CPU cores * 2` or more |
+| Task Type  | Formula |
+|------------|------|
+| CPU-Bound  | `CPU cores + 1` |
+| IO-Bound   | `CPU cores * 2` or more |
 
 ## Best Practices
 - **Profile your application** to determine whether tasks are CPU-bound or IO-bound.
