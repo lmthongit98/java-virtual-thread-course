@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class AppD {
+public class AppC {
 
     private static final int MAX_THREAD = 10;
 
@@ -71,7 +71,11 @@ class Task {
 
     public static void doTask(int i){
         System.out.println("Starting task " + i);
-        CommonUtils.sleep(Duration.ofSeconds(1));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("End task " + i);
     }
 
