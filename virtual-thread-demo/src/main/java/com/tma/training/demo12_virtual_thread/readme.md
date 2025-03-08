@@ -49,21 +49,6 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 - Creates an **executor service** where **each task gets its own virtual thread**.
 - **Auto-closes** after execution using try-with-resources.
 
-### **4. Using `StructuredTaskScope` (Scoped Execution)**
-```java
-import java.util.concurrent.*;
-
-try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-    Future<String> future = scope.fork(() -> {
-        return "Result from virtual thread: " + Thread.currentThread();
-    });
-    scope.join(); // Waits for all tasks to finish
-    System.out.println(future.resultNow());
-}
-```
-- **Structured concurrency**: Manages multiple virtual threads within a task scope.
-- **Ensures proper shutdown** if any thread fails.
-
 ## How Virtual Threads Work
 - **Virtual threads are NOT bound to platform threads** permanently.
 - Instead, they **run on top of a small number of carrier threads**, which are platform threads.
