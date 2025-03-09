@@ -1,0 +1,17 @@
+server:
+  port: 8081
+#  tomcat:
+#      threads:
+#        max: 50
+spring:
+  application:
+    name: order-service
+  threads:
+    virtual:
+      enabled: true
+restaurant:
+  service:
+    url: http://localhost:8082/restaurant
+rider:
+  service:
+    url: http://localhost:8083/rider
