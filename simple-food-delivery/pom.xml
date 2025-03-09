@@ -11,7 +11,7 @@
     <modules>
         <module>order-service</module>
         <module>restaurant-service</module>
-<!--        <module>rider-service</module>-->
+        <module>rider-service</module>
     </modules>
 
 </project>

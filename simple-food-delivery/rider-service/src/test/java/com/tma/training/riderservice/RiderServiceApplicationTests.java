@@ -1,10 +1,10 @@
-package com.tma.training.restaurantservice;
+package com.tma.training.riderservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestaurantServiceApplicationTests {
+class RiderServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
