@@ -28,7 +28,7 @@ public class AppA03 {
                 try {
                     OrderDto orderDto = getResponse(executorService);
                     log.info("orderDto {}", orderDto);
-                } catch (RuntimeException | InterruptedException e) {
+                } catch (Exception e) {
                     log.error("Getting exception!", e);
                 }
             });
@@ -40,12 +40,15 @@ public class AppA03 {
         Future<String> user = executorService.submit(AppA03::findUser);
         Future<Integer> order = executorService.submit(AppA03::fetchOrder);
 
-        // event parent thread fail, child threads are still running
+        // event parent thread is interrupted, child threads are still running
         Thread.sleep(500);
-        throw new RuntimeException("Something went wrong!");
+        log.info("is parent thread interrupted {}", Thread.currentThread().isInterrupted());
+        Thread.currentThread().interrupt();
+        log.info("is parent thread interrupted {}", Thread.currentThread().isInterrupted());
+
 //        String theUser = user.get();
 //        int theOrder = order.get();
-//        return new OrderDto(theUser, theOrder);
+        return new OrderDto(null, null);
     }
 
     private static String findUser() throws InterruptedException {

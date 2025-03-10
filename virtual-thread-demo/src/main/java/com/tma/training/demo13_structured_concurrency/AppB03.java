@@ -23,7 +23,7 @@ public class AppB03 {
                 try {
                     OrderDto orderDto = getResponse();
                     log.info("orderDto {}", orderDto);
-                } catch (RuntimeException | ExecutionException | InterruptedException e) {
+                } catch (Exception e) {
                     log.error("Getting exception!", e);
                 }
             });
@@ -31,15 +31,17 @@ public class AppB03 {
         }
     }
 
-    private static OrderDto getResponse() throws ExecutionException, InterruptedException {
+    private static OrderDto getResponse() throws InterruptedException, ExecutionException {
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             var userFuture = scope.fork(AppB03::findUser);
             var orderFuture = scope.fork(AppB03::fetchOrder);
             Thread.sleep(500);
-            throw new RuntimeException("Something went wrong!");
-//            scope.join(); // wait for tasks to complete
-//            scope.throwIfFailed();
-//            return new OrderDto(userFuture.get(), orderFuture.get());
+            log.info("is parent thread interrupted {}", Thread.currentThread().isInterrupted());
+            Thread.currentThread().interrupt();
+            log.info("is parent thread interrupted {}", Thread.currentThread().isInterrupted());
+            scope.join(); // will throw exception if current thread is interrupted
+            scope.throwIfFailed();
+            return new OrderDto(userFuture.get(), orderFuture.get());
         }
     }
 
