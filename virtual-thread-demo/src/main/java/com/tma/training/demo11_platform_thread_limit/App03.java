@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 public class App03 {
 
     private static final Logger log = LoggerFactory.getLogger(App03.class);
-    private static final int NUMBER_OF_TASK = 10_000;
+    private static final int NUMBER_OF_TASK = 1000;
 
     public static void main(String[] args) throws InterruptedException {
         log.info("Running {} task", NUMBER_OF_TASK);
@@ -27,8 +27,8 @@ public class App03 {
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < NUMBER_OF_TASK; i++) {
                 executor.submit(() -> {
-                    for (int j = 0;  j < 100; j++) {
-                        blockingIoOperation();
+                    for (int j = 0; j < 100; j++) {
+                        blockingIoOperation(10);
                     }
                 });
             }
@@ -36,9 +36,9 @@ public class App03 {
     }
 
     // simulate a long blocking i/o
-    private static void blockingIoOperation() {
+    private static void blockingIoOperation(long millis) {
         log.info("Executing a blocking task");
-        CommonUtils.sleep(Duration.ofMillis(10));
+        CommonUtils.sleep(Duration.ofMillis(millis));
     }
 
 }
