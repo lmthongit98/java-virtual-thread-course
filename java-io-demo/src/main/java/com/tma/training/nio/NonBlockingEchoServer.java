@@ -13,7 +13,7 @@
  * [T3] current thread calls blocking read() on socket A => BLOCKS!
  */
 
-package com.tma.training;
+package com.tma.training.nio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

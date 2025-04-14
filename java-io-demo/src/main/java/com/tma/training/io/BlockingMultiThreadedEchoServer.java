@@ -1,4 +1,4 @@
-package com.tma.training;
+package com.tma.training.io;
 
 import java.io.*;
 import java.net.*;

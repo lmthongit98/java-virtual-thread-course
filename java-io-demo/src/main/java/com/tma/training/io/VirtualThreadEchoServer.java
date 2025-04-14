@@ -1,23 +1,19 @@
-package com.tma.training;
+package com.tma.training.io;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
-public class BlockingSingleThreadedEchoServer {
+public class VirtualThreadEchoServer {
     private static final int PORT = 12345;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Blocking Echo Server is running on port " + PORT);
+            System.out.println("Virtual Thread Echo Server is running on port " + PORT);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                handleClient(clientSocket);
+                Thread.startVirtualThread(() -> handleClient(clientSocket));
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -26,9 +22,10 @@ public class BlockingSingleThreadedEchoServer {
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
 
             String line;
-            while ((line = reader.readLine()) != null) { // BLOCKING
+            while ((line = reader.readLine()) != null) {
                 System.out.println("Received: " + line);
-                writer.write("Echo: " + line + "\n");
+                String response = "Echo: " + line + "\n";
+                writer.write(response);
                 writer.flush();
             }
 
