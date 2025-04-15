@@ -25,7 +25,7 @@ public class App {
         try (var executor = Executors.newFixedThreadPool(NUMBER_OF_CPU_CORE)) {
             for (int i = 0; i < NUM_OF_TASKS; i++) {
                 executor.submit(App::performIOTask);
-//                executor.submit(AppA::performCpuTask);
+//                executor.submit(App::performCpuTask);
             }
         }
         long end = System.currentTimeMillis();
