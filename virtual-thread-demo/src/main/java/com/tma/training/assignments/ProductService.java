@@ -1,14 +1,18 @@
 package com.tma.training.assignments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class ProductService {
-    private static final Map<Integer, String> PRODUCT_DB = Map.of(
-            1, "Apple", 2, "Banana", 3, "Carrot", 4, "Date", 5, "Eggplant",
-            6, "Fig", 7, "Grapes", 8, "Honeydew", 9, "Iceberg Lettuce", 10, "Jackfruit"
-    );
+    private static final Map<Integer, String> PRODUCT_DB = new HashMap<>();
+
+    static {
+        IntStream.rangeClosed(1, 10000).forEach(i -> PRODUCT_DB.put(i, STR."Product-\{i}"));
+    }
+
 
     // Simulated network latency
     public static String fetchProductName(int productId) {
