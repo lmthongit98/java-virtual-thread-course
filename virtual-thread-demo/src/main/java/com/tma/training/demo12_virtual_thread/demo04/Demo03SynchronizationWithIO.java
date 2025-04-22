@@ -34,7 +34,7 @@ public class Demo03SynchronizationWithIO {
 
         Runnable runnable = () -> log.info("*** Test Message ***");
 
-//// We will not see this issue wit Platform threads
+//// We will not see this issue with Platform threads
 //        demo(Thread.ofPlatform());
 //        Thread.ofPlatform().start(runnable);
 

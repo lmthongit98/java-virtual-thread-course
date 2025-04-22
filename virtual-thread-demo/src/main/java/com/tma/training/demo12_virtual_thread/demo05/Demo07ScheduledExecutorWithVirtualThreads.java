@@ -20,9 +20,8 @@ public class Demo07ScheduledExecutorWithVirtualThreads {
     private static final Logger log = LoggerFactory.getLogger(Demo07ScheduledExecutorWithVirtualThreads.class);
 
     public static void main(String[] args) {
+//        scheduled();
         scheduledWithVT();
-
-        CommonUtils.sleep(Duration.ofSeconds(5)); // prevent main thread from exiting from 5s
     }
 
     private static void scheduled() {
@@ -30,6 +29,7 @@ public class Demo07ScheduledExecutorWithVirtualThreads {
             executor.scheduleAtFixedRate(() -> {
                 log.info("executing task");
             }, 0, 1, TimeUnit.SECONDS);
+            CommonUtils.sleep(Duration.ofSeconds(5)); // prevent auto closeable from 5s
         }
     }
 
@@ -41,6 +41,7 @@ public class Demo07ScheduledExecutorWithVirtualThreads {
             scheduler.scheduleAtFixedRate(() -> {
                 executor.submit(() -> log.info("executing task"));
             }, 0, 1, TimeUnit.SECONDS);
+            CommonUtils.sleep(Duration.ofSeconds(5)); // prevent auto closeable from 5s
         }
     }
 
