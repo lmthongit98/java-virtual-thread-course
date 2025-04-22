@@ -13,7 +13,7 @@ public class Task {
 
         try {
             log.info("starting I/O task {}.", i);
-            Thread.sleep(Duration.ofSeconds(10));
+            Thread.sleep(Duration.ofSeconds(1));
             log.info("ending I/O task {}.", i);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
